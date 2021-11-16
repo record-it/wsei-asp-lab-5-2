@@ -61,6 +61,26 @@ namespace Lab_5_2.Controllers
             }
             return View("List", contacts);
         }
+
+        public IActionResult EditForm(int id)
+        {
+            return View();
+        }
+
+        public IActionResult Edit(Contact contact)
+        {
+            var find = contacts.Find(c => c.Id == contact.Id);
+            if (find != null)
+            {
+                find.Email = contact.Email;
+                find.Phone = contact.Phone;
+                return View("List", contacts);
+            }
+            else
+            {
+                throw new NotImplementedException();
+            }
+        }
     }
 }
 
