@@ -23,6 +23,7 @@ namespace Lab_5_2
             services.AddDbContext<ApplicationDbContext>(options => 
                 options.UseSqlServer(Configuration["Data:Connection"]));
             services.AddTransient<IContactRepository, EFContactRepository>();
+            services.AddTransient<ICRUDContactRepository, EFCRUDContactRepository>();
             services.AddControllersWithViews();
         }
 

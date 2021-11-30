@@ -9,12 +9,13 @@ namespace Lab_5_2.Controllers
 {
     public class ContactController : Controller
     {
-        static List<Contact> contacts = new List<Contact>()
+        private ICRUDContactRepository repository;
+
+        public ContactController(ICRUDContactRepository repository)
         {
-            new Contact(){Id=1, Name="Tomek", Email="tom@wsei.edu.pl"},
-            new Contact(){Id=2, Name="Ola", Email="ola@wsei.edu.pl"}
-        };
-        static int index = 3;
+            this.repository = repository;
+        }
+
         public IActionResult Index()
         {
             return View();
@@ -29,9 +30,7 @@ namespace Lab_5_2.Controllers
         {
             if (ModelState.IsValid)
             {
-                contact.Id = index++;
-                contacts.Add(contact);
-                return View("ConfirmContact", contact);
+                return View("ConfirmContact", repository.Add(contact));
             }
             else
             {
@@ -41,25 +40,13 @@ namespace Lab_5_2.Controllers
 
         public IActionResult List()
         {
-            return View(contacts);
+            return View(repository.FindAll());
         }
 
         public IActionResult Delete(int id)
         {
-            Contact found = null;
-            foreach (var contact in contacts)
-            {
-                if (contact.Id == id)
-                {
-                    found = contact;
-                    break;
-                }
-            }
-            if (found != null)
-            {
-                contacts.Remove(found);
-            }
-            return View("List", contacts);
+            repository.Delete(id);
+            return View("List", repository.FindAll());
         }
 
         public IActionResult EditForm(int id)
@@ -69,17 +56,8 @@ namespace Lab_5_2.Controllers
 
         public IActionResult Edit(Contact contact)
         {
-            var find = contacts.Find(c => c.Id == contact.Id);
-            if (find != null)
-            {
-                find.Email = contact.Email;
-                find.Phone = contact.Phone;
-                return View("List", contacts);
-            }
-            else
-            {
-                throw new NotImplementedException();
-            }
+           repository.Update(contact);
+           return View("List", repository.FindAll());  
         }
     }
 }
