@@ -51,7 +51,7 @@ namespace Lab_5_2.Controllers
 
         public IActionResult EditForm(int id)
         {
-            return View();
+            return View(repository.FindById(id));
         }
 
         public IActionResult Edit(Contact contact)
