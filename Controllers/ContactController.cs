@@ -10,10 +10,12 @@ namespace Lab_5_2.Controllers
     public class ContactController : Controller
     {
         private ICRUDContactRepository repository;
+        private IContactRepository contactRepository;
 
-        public ContactController(ICRUDContactRepository repository)
+        public ContactController(ICRUDContactRepository repository, IContactRepository contactRepository)
         {
             this.repository = repository;
+            this.contactRepository = contactRepository;
         }
 
         public IActionResult Index()
@@ -58,6 +60,18 @@ namespace Lab_5_2.Controllers
         {
            repository.Update(contact);
            return View("List", repository.FindAll());  
+        }
+
+
+        public IActionResult Issue()
+        {
+            Issue issue = new Issue()
+            {
+                Title = "Test",
+                Date = new DateTime()
+            };
+            contactRepository.addIssue(4, issue);
+            return View("List", repository.FindAll());
         }
     }
 }

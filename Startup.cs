@@ -1,6 +1,9 @@
+using System;
+using System.Threading.Tasks;
 using Lab_5_2.Models;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -24,6 +27,11 @@ namespace Lab_5_2
                 options.UseSqlServer(Configuration["Data:Connection"]));
             services.AddTransient<IContactRepository, EFContactRepository>();
             services.AddTransient<ICRUDContactRepository, EFCRUDContactRepository>();
+            services.AddTransient<ICRUDStudentRepository, EFCRUDStudentRepository>();
+            services.AddTransient<ICRUDBookRepository, EFCRUDBookRepository>();
+            services.AddTransient<ICRUDBlogItemRepository, EFBlogItemRepository>();
+            services.AddMemoryCache();
+            services.AddSession();
             services.AddControllersWithViews();
         }
 
@@ -42,16 +50,20 @@ namespace Lab_5_2
             }
             app.UseHttpsRedirection();
             app.UseStaticFiles();
-
             app.UseRouting();
-
             app.UseAuthorization();
-
+            app.UseSession();
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute(
                     name: "default",
                     pattern: "{controller=Home}/{action=Index}/{id?}");
+            });
+            app.Run((context) =>
+            {
+                //throw new Exception("Orzesz orzeszku!!");
+                context.Response.WriteAsync("Hello from ASP.NET");
+                return Task.CompletedTask;
             });
         }
     }

@@ -11,6 +11,14 @@ namespace Lab_5_2.Models
             _context = context;
         }
 
-        public IQueryable<Contact> products => _context.Contacts;
+        public IQueryable<Contact> contacts => _context.Contacts;
+
+        public void addIssue(int contactId, Issue issue)
+        {
+            Contact contact = _context.Contacts.Find(contactId);
+            contact.Issues.Add(issue);
+            _context.Contacts.Update(contact);
+            _context.SaveChanges();
+        }
     }
 }
