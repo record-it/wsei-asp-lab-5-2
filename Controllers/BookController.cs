@@ -16,26 +16,41 @@ namespace Lab_5_2.Controllers
             this.books = books;
         }
 
-        public IActionResult Index()
+        public String Index()
         {
-            return View();
+            return "Index";
         }
 
-        [HttpPost]
-        public IActionResult Add(Book book)
+        [HttpGet]
+        public String Add()
         {
-            if (ModelState.IsValid)
+
+            Book book = new Book()
             {
-                book = books.Add(book);
-                return View("Confirm", book);
-            }
-            return View();
+                PublishingYear = 2000,
+                Title = "Java"
+            };
+            book.Authors.Add(new Author()
+            {
+                firstName = "Greg",
+                lastName = "Frontman",
+                birthDate = DateTime.Parse("1978-10-10")
+            });
+            book.Authors.Add(new Author()
+            {
+                firstName = "Alan",
+                lastName = "Backend",
+                birthDate = DateTime.Parse("1987-11-20")
+            });
+            book = books.Add(book);
+            return book.ToString();
+            
         }
 
-        public IActionResult Delete(int id)
+        public String Delete(int id)
         {
             books.Delete(id);
-            return View("List", books.FindAll());
+            return "Deleted";
         }
     }
 }

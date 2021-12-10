@@ -9,6 +9,11 @@ namespace Lab_5_2.Models
 {
     public class Book
     {
+        public Book()
+        {
+            Authors = new HashSet<Author>();
+        }
+
         [HiddenInput]
         public int Id { get; set; }
         [Required(ErrorMessage = "Musisz podać tytuł książki!")]
@@ -19,5 +24,9 @@ namespace Lab_5_2.Models
         [Range(minimum: 2000, maximum: 2030, ErrorMessage = "Podaj rok między 2000 a 230")]
         public int PublishingYear { get; set; }
 
+        public override string ToString()
+        {
+            return "{Book: " + Title +" " + PublishingYear +" " + Authors + "}";
+        }
     }
 }
