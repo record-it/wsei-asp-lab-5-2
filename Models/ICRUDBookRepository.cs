@@ -19,6 +19,8 @@ namespace Lab_5_2.Models
         IList<Book> FindAll();
 
         IList<Book> FindPage(int page, int size);
+
+        void AddAuthorToBook(int authorId, int bookId);
     }
 
     public class EFCRUDBookRepository : ICRUDBookRepository
@@ -60,6 +62,14 @@ namespace Lab_5_2.Models
                 .Skip(page * size)
                 .Take(size)
                 .ToList();
+        }
+
+        public void AddAuthorToBook(int authorId, int bookId)
+        {
+            var author = context.Authors.Find(authorId);
+            var book = context.Books.Find(bookId);
+            book.Authors.Add(author);
+            Update(book);
         }
 
         public Book Update(Book book)

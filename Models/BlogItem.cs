@@ -17,7 +17,7 @@ namespace Lab_5_2.Models
         [MinLength(5, ErrorMessage = "Treść powinna mieć na najmniej 5 znaków")]
         public string Content { get; set; }
 
-        public DateTime CreationTimstamp { get; set; }
+        public DateTime CreationTimestamp { get; set; }
 
     }
 }

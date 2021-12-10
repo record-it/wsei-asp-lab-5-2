@@ -55,7 +55,7 @@ namespace Lab_5_2.Models
 
         public IList<BlogItem> FindPage(int page, int size)
         {
-            return (from item in context.BlogItems orderby item.CreationTimstamp select item)
+            return (from item in context.BlogItems orderby item.CreationTimestamp select item)
                 .Skip(page * size)
                 .Take(size)
                 .ToList();

@@ -15,7 +15,7 @@ namespace Lab_5_2.Models
         [MinLength(2)]
         public string Title { get; set; }
         [Required(ErrorMessage = "Musisz podać  autora!")]
-        public string Author { get; set; }
+        public ICollection<Author> Authors { get; set; }
         [Range(minimum: 2000, maximum: 2030, ErrorMessage = "Podaj rok między 2000 a 230")]
         public int PublishingYear { get; set; }
 
