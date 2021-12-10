@@ -18,6 +18,8 @@ namespace Lab_5_2.Models
         IList<BlogItem> FindAll();
 
         IList<BlogItem> FindPage(int page, int size);
+
+        void addTagToBlogItem(int blogItemId, int tagId);
     }
 
     public class EFBlogItemRepository : ICRUDBlogItemRepository
@@ -52,14 +54,19 @@ namespace Lab_5_2.Models
             context.SaveChanges();
             return entryEntity.Entity;
         }
-
         public IList<BlogItem> FindPage(int page, int size)
         {
             return (from item in context.BlogItems orderby item.CreationTimestamp select item)
                 .Skip(page * size)
                 .Take(size)
                 .ToList();
-
+        }
+        public void addTagToBlogItem(int blogItemId, int tagId)
+        {
+            var item = context.BlogItems.Find(blogItemId);
+            var tag = context.Tags.Find(tagId);
+            item.Tags.Add(tag);
+            Update(item);
         }
 
         public BlogItem Save(BlogItem item)

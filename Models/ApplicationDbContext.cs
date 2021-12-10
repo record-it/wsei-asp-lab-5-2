@@ -16,6 +16,8 @@ namespace Lab_5_2.Models
         public DbSet<Lecture> Lectures { get; set; }
         
         public DbSet<Author> Authors { get; set; }
+        
+        public DbSet<Tag> Tags { get; set; }
 
     }
 }

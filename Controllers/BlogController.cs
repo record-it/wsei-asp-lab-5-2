@@ -16,20 +16,18 @@ namespace Lab_5_2.Controllers
             this.repository = repository;
         }
 
-        public IActionResult Index()
+        [HttpGet]
+        public String Add()
         {
-            return View();
-        }
-
-        [HttpPost]
-        public IActionResult Add(BlogItem item)
-        {
-            if (ModelState.IsValid)
+            var item = new BlogItem()
             {
-                item = repository.Save(item);
-                return View("Confirm", item);
-            }
-            return View();
+                Content = "TEST",
+                Title = "TEST"
+            };
+            item.Tags.Add(new Tag{ Name = "C#"});
+            item.Tags.Add(new Tag{ Name = "ASP.NET"});
+            repository.Save(item);
+            return "New BlogItem SAVED";
         }
     }
 }
