@@ -13,5 +13,7 @@ namespace Lab_5_2.Models
 
         public DbSet<Issue> Issues { get; set; }
 
+        public DbSet<Lecture> Lectures { get; set; }
+
     }
 }

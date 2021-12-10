@@ -17,6 +17,8 @@ namespace Lab_5_2.Models
         Student FindById(int id);
 
         IList<Student> FindPage(int page, int size);
+
+        void AssignLecturToStudent(int studentId, int lectureId);
     }
 
     public class EFCRUDStudentRepository : ICRUDStudentRepository
@@ -34,6 +36,14 @@ namespace Lab_5_2.Models
             context.SaveChanges();
             return entityEntry.Entity;
 
+        }
+
+        public void AssignLecturToStudent(int studentId, int lectureId)
+        {
+            var student = context.Students.Find(studentId);
+            var lecture = context.Lectures.Find(lectureId);
+            student.Lectures.Add(lecture);
+            Update(student);
         }
 
         public void Delete(Student student)

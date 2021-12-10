@@ -25,5 +25,12 @@ namespace Lab_5_2.Models
         public string City { get; set; }
 
         public string ZipCode { get; set; }
+
+        public ICollection<Lecture> Lectures { get; set; }
+
+        public Student()
+        {
+            Lectures = new HashSet<Lecture>();
+        }
     }
 }

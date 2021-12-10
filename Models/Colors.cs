@@ -5,7 +5,17 @@ using System.Threading.Tasks;
 
 namespace Lab_5_2.Models
 {
-    public class Colors
+    public enum Colors
     {
+        RED=1, WHITE=4, BLACK=6
+    }
+
+    public class EnumDemo
+    {
+        Colors color = Colors.RED;
+        public Colors get()
+        {
+            return (Colors) Enum.Parse(typeof(Colors), "RED");
+        }
     }
 }
