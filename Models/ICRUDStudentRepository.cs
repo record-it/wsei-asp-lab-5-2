@@ -18,7 +18,7 @@ namespace Lab_5_2.Models
 
         IList<Student> FindPage(int page, int size);
 
-        void AssignLecturToStudent(int studentId, int lectureId);
+        void AssignLectureToStudent(int studentId, int lectureId);
     }
 
     public class EFCRUDStudentRepository : ICRUDStudentRepository
@@ -38,7 +38,7 @@ namespace Lab_5_2.Models
 
         }
 
-        public void AssignLecturToStudent(int studentId, int lectureId)
+        public void AssignLectureToStudent(int studentId, int lectureId)
         {
             var student = context.Students.Find(studentId);
             var lecture = context.Lectures.Find(lectureId);
