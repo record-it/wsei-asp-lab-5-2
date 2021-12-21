@@ -15,15 +15,5 @@ namespace Lab_5_2.Controllers
         {
             this.students = students;
         }
-
-        public IActionResult Index()
-        {
-            return View();
-        }
-
-        public IActionResult Page(int page, int size)
-        {
-            return View(students.FindPage(page, size));
-        }
     }
 }
