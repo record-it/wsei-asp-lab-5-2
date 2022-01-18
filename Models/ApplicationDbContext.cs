@@ -18,6 +18,7 @@ namespace Lab_5_2.Models
         public DbSet<Author> Authors { get; set; }
         
         public DbSet<Tag> Tags { get; set; }
+        public DbSet<Block> Blocks { get; set; }
 
     }
 }

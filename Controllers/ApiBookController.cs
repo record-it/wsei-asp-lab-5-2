@@ -1,10 +1,7 @@
-﻿using Lab_5_2.Models;
-using Microsoft.AspNetCore.Http;
+﻿using Lab_5_2.Filtr;
+using Lab_5_2.Models;
 using Microsoft.AspNetCore.Mvc;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace Lab_5_2.Controllers
 {
@@ -12,42 +9,37 @@ namespace Lab_5_2.Controllers
     [ApiController]
     public class ApiBookController : ControllerBase
     {
+        private ICRUDBookRepository books;
+
+        public ApiBookController(ICRUDBookRepository books)
+        {
+            this.books = books;
+        }
+
         //deklaracja zmiennej repozytorium
         [HttpGet]
-        public List<Book> GetBooks()
+        [DisableBasicAuthorization]
+        public IList<Book> GetBooks()
         {
-            //zwrócić listę obiektów pobranych z repozytorium
-            return new List<Book>()
-            {
-                new Book()
-                {
-                    Title="AAAA"
-                },
-                new Book()
-                {
-                    Title="BBBB"
-                }
-            };
+            return books.FindAll();
         }
 
         [HttpPost]
-        public IActionResult AddBook([FromBody] Book book)
+        public ActionResult<Book> AddBook([FromBody] Book book)
         {
-            //dodanie obiektu do repozytorium
-            //pobrać z utworzonego Id i utworzyć location
-            book.Id = 5;
-            return new CreatedResult($"/api/books/{book.Id}", book);
+            Book book1 = books.Add(book);
+            return new CreatedResult($"/api/books/{book1.Id}", book1);
         }
 
 
         [HttpGet("{id}")]
+        [DisableBasicAuthorization]
         public ActionResult<Book> GetBook(int id)
         {
-            //pobieranie obiektu z repozytorium o danym id
-            //testujemu czy obiekt istnieje, różny od null
-            if (id < 5 && id > 0)
+            Book book = books.FindById(id);
+            if (book != null)
             {
-                return new OkObjectResult(new Book() { Id = id, Title = "tytuł" });
+                return new OkObjectResult(book);
             }
             else
             {

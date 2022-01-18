@@ -22,7 +22,7 @@ namespace Lab_5_2.Controllers
         }
 
         [HttpGet]
-        public String Add()
+        public Book Add()
         {
 
             Book book = new Book()
@@ -43,7 +43,7 @@ namespace Lab_5_2.Controllers
                 birthDate = DateTime.Parse("1987-11-20")
             });
             book = books.Add(book);
-            return book.ToString();
+            return book;
             
         }
 

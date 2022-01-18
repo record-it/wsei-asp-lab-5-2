@@ -24,9 +24,20 @@ namespace Lab_5_2.Models
         [Range(minimum: 2000, maximum: 2030, ErrorMessage = "Podaj rok między 2000 a 230")]
         public int PublishingYear { get; set; }
 
+        public override bool Equals(object obj)
+        {
+            return obj is Book book &&
+                   Id == book.Id &&
+                   Title == book.Title &&
+                   EqualityComparer<ICollection<Author>>.Default.Equals(Authors, book.Authors) &&
+                   PublishingYear == book.PublishingYear;
+        }
+
         public override string ToString()
         {
             return "{Book: " + Title +" " + PublishingYear +" " + Authors + "}";
         }
+
+
     }
 }

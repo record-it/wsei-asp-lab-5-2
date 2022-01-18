@@ -50,15 +50,22 @@ namespace Lab_5_2.Models
 
         public BlogItem Update(BlogItem item)
         {
-            var entryEntity = context.BlogItems.Update(item);
-            context.SaveChanges();
-            return entryEntity.Entity;
+            try
+            {
+                var entryEntity = context.BlogItems.Update(item);
+                context.SaveChanges();
+                return entryEntity.Entity;
+            } catch(Exception e)
+            {
+                return null;
+            }
         }
         public IList<BlogItem> FindPage(int page, int size)
         {
             return (from item in context.BlogItems orderby item.CreationTimestamp select item)
                 .Skip(page * size)
                 .Take(size)
+              
                 .ToList();
         }
         public void addTagToBlogItem(int blogItemId, int tagId)

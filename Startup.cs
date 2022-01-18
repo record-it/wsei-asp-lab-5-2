@@ -1,5 +1,6 @@
 using System;
 using System.Threading.Tasks;
+using Lab_5_2.Filtr;
 using Lab_5_2.Models;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -23,6 +24,7 @@ namespace Lab_5_2
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddSingleton<BasicAuthorizationFilter>();
             services.AddDbContext<ApplicationDbContext>(options => 
                 options.UseSqlServer(Configuration["Data:Connection"]));
             services.AddTransient<IContactRepository, EFContactRepository>();
@@ -33,6 +35,10 @@ namespace Lab_5_2
             services.AddMemoryCache();
             services.AddSession();
             services.AddControllersWithViews();
+            services.AddMvc().AddMvcOptions(options =>
+            {
+                options.Filters.AddService<BasicAuthorizationFilter>();
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -57,14 +63,8 @@ namespace Lab_5_2
             {
                 endpoints.MapControllerRoute(
                     name: "default",
-                    pattern: "{controller=Home}/{action=Index}/{id?}");
-            });
-            app.Run((context) =>
-            {
-                //throw new Exception("Orzesz orzeszku!!");
-                context.Response.WriteAsync("Hello from ASP.NET");
-                return Task.CompletedTask;
-            });
+                    pattern: "{controller=Home}/{action=Index}/{id:int:range(10,15)=15}");
+           });
         }
     }
 }

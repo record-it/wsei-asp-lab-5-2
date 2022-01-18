@@ -1,4 +1,5 @@
-﻿using Lab_5_2.Models;
+﻿using Lab_5_2.Filtr;
+using Lab_5_2.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System;
@@ -8,7 +9,8 @@ using System.Linq;
 using System.Threading.Tasks;
 
 namespace Lab_5_2.Controllers
-{
+{   
+    [DisableBasicAuthorization]
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
@@ -17,15 +19,16 @@ namespace Lab_5_2.Controllers
         {
             _logger = logger;
         }
-
-        public IActionResult Index()
+        [Route("{id:int}")]
+        public IActionResult Index(int id)
         {
+            ViewBag.id = id;
             return View();
         }
 
-        public IActionResult Privacy()
+        public String Privacy(int id)
         {
-            return View();
+            return $"Hello id = {id}";
         }
 
         public IActionResult PowerForm()
